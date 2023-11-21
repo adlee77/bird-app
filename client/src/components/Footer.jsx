@@ -1,12 +1,12 @@
 import React from "react";
-import Logo from "../img/logo.png";
+import Logo from "../img/birdfriendslogo.png";
 
 const Footer = () => {
   return (
     <footer>
       <img src={Logo} alt="" />
       <span>
-        Made with ♥️ and <b>React.js</b>.
+        Developed by Andrew Lee
       </span>
     </footer>
   );

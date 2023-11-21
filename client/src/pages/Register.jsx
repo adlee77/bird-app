@@ -5,9 +5,10 @@ import axios from "axios";
 
 const Register = () => {
   const [inputs, setInputs] = useState({
-    username: "",
     email: "",
     password: "",
+    first_name: "",
+    last_name: ""
   });
   const [err, setError] = useState(null);
 
@@ -21,7 +22,7 @@ const Register = () => {
     e.preventDefault();
     try {
       await axios.post("/auth/register", inputs);
-      navigate("/login");
+      navigate("/");
     } catch (err) {
       setError(err.response.data);
     }
@@ -34,13 +35,20 @@ const Register = () => {
         <input
           required
           type="text"
-          placeholder="username"
-          name="username"
+          placeholder="First Name"
+          name="first_name"
           onChange={handleChange}
         />
         <input
           required
-          type="email"
+          type="text"
+          placeholder="Last Name"
+          name="last_name"
+          onChange={handleChange}
+        />
+        <input
+          required
+          type="text"
           placeholder="email"
           name="email"
           onChange={handleChange}
@@ -55,7 +63,7 @@ const Register = () => {
         <button onClick={handleSubmit}>Register</button>
         {err && <p>{err}</p>}
         <span>
-          Do you have an account? <Link to="/login">Login</Link>
+          Already have an account? <Link to="/login">Login</Link>
         </span>
       </form>
     </div>

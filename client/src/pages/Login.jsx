@@ -6,7 +6,7 @@ import { AuthContext } from "../context/authContext";
 
 const Login = () => {
   const [inputs, setInputs] = useState({
-    username: "",
+    email: "",
     password: "",
   });
   const [err, setError] = useState(null);
@@ -36,8 +36,8 @@ const Login = () => {
         <input
           required
           type="text"
-          placeholder="username"
-          name="username"
+          placeholder="email"
+          name="email"
           onChange={handleChange}
         />
         <input
@@ -50,7 +50,7 @@ const Login = () => {
         <button onClick={handleSubmit}>Login</button>
         {err && <p>{err}</p>}
         <span>
-          Don't you have an account? <Link to="/register">Register</Link>
+          Don't have an account?<br/><Link to="/register">Register here</Link>
         </span>
       </form>
     </div>
