@@ -44,6 +44,7 @@ const Single = () => {
     const doc = new DOMParser().parseFromString(html, "text/html")
     return doc.body.textContent
   }
+  
 
   return (
     <div className="single">
@@ -55,10 +56,10 @@ const Single = () => {
             alt=""
           />}
           <div className="info">
-            <span>{post.username}</span>
+            <span>{post.first_name} {post.last_name}</span>
             <p>Posted {moment(post.date).fromNow()}</p>
           </div>
-          {currentUser.username === post.username && (
+          {currentUser.id === post.id && (
             <div className="edit">
               <Link to={`/write?edit=2`} state={post}>
                 <img src={Edit} alt="" />
@@ -70,7 +71,7 @@ const Single = () => {
         <h1>{post.title}</h1>
         <p
           dangerouslySetInnerHTML={{
-            __html: DOMPurify.sanitize(post.desc),
+            __html: DOMPurify.sanitize(post.description),
           }}
         ></p>      </div>
       <Menu cat={post.cat}/>

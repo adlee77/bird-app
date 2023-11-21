@@ -1,8 +1,8 @@
 $brown: #8f6e5d;
 $tan: #FEFBF8;
+@import url('https://fonts.cdnfonts.com/css/bukhari-script');
 
 .app {
-  width: 100vw;
   display: flex;
   justify-content: center;
   .container {
@@ -145,9 +145,6 @@ $tan: #FEFBF8;
     //FOOTER
 
     footer {
-      position: absolute;
-      bottom: 0;
-      margin-top: 100px;
       padding: 20px;
       background-color: $tan;
       width: 100%;
@@ -165,6 +162,7 @@ $tan: #FEFBF8;
     //HOME
 
     .home {
+      margin: 20px;
       .posts {
         margin-top: 50px;
         display: flex;
@@ -182,6 +180,7 @@ $tan: #FEFBF8;
           .img {
             flex: 2;
             position: relative;
+            width: 200px;
 
             &::after {
               content: "";
@@ -195,7 +194,7 @@ $tan: #FEFBF8;
             }
 
             img {
-              width: 100%;
+              width: 200px;
               max-height: 400px;
               object-fit: cover;
             }
@@ -240,6 +239,7 @@ $tan: #FEFBF8;
     .single {
       display: flex;
       gap: 50px;
+      margin: 40px;
 
       .content {
         flex: 5;
@@ -339,7 +339,7 @@ $tan: #FEFBF8;
     //WRITE
 
     .add {
-      margin-top: 20px;
+      margin: 40px;
       display: flex;
       gap: 20px;
 
@@ -347,7 +347,11 @@ $tan: #FEFBF8;
         flex: 5;
         display: flex;
         flex-direction: column;
-        gap: 20px;
+        gap: 10px;
+
+        .write-title {
+          font-family: 'Bukhari Script', sans-serif;
+        }
 
         input {
           padding: 10px;
@@ -381,6 +385,11 @@ $tan: #FEFBF8;
           justify-content: space-between;
           font-size: 12px;
           color: #555;
+
+          .imagePreview {
+            width: 200px;
+            margin: 10px 0;
+          }
 
           h1{
             font-size: 20px;
