@@ -27,16 +27,19 @@ const Navbar = () => {
               {element}
             </Link>
           </span>
-          <DropdownButton id="dropdown-basic-button" title={name}>
-            <Dropdown.Item href="/profile">Your Profile</Dropdown.Item>
-            <Dropdown.Item>{currentUser ? (
-              <span onClick={logout}>Logout</span> ) : (
+          {!currentUser ? (
                 <Link className="link" to="/login">
                   Login
                 </Link>
+              ) : (
+                <DropdownButton id="dropdown-basic-button" title={name}>
+                  <Dropdown.Item href="/profile">Your Profile</Dropdown.Item>
+                  <Dropdown.Item>
+                    <span onClick={logout}>Logout</span>
+                  </Dropdown.Item>
+                </DropdownButton>
               )}
-            </Dropdown.Item>
-          </DropdownButton>
+          
         </div>
       </div>
     </div>
