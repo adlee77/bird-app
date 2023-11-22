@@ -3,27 +3,18 @@ import authRoutes from "./routes/auth.js";
 import userRoutes from "./routes/users.js";
 import postRoutes from "./routes/posts.js";
 import cookieParser from "cookie-parser";
+import dotenv from 'dotenv';
+import { initializeApp } from "firebase/app";
+import { getStorage, ref, uploadString, getDownloadURL } from "firebase/storage";
+import { v4 } from "uuid";
 import multer from "multer";
 
+
+dotenv.config({ path: './.env' })
 const app = express();
 
 app.use(express.json());
 app.use(cookieParser());
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "../client/public/upload");
-  },
-  filename: function (req, file, cb) {
-    cb(null, Date.now() + file.originalname);
-  },
-});
-
-const upload = multer({ storage });
-
-app.post("/api/upload", upload.single("file"), function (req, res) {
-  const file = req.file;
-  res.status(200).json(file.filename);
-});
 
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
@@ -32,3 +23,41 @@ app.use("/api/posts", postRoutes);
 app.listen(8800, () => {
   console.log("Connected!");
 });
+
+const firebaseConfig = {
+  apiKey: process.env.FIREBASE_API_KEY,
+  authDomain: "bird-friends-1f511.firebaseapp.com",
+  projectId: "bird-friends-1f511",
+  storageBucket: process.env.FIREBASE_BUCKET,
+  messagingSenderId: "503411450824",
+  appId: "1:503411450824:web:f43d324b2c74d9493196fd",
+  measurementId: "G-YVD8ZXW593"
+};
+
+const firebaseapp = initializeApp(firebaseConfig);
+const firebaseStorage = getStorage(firebaseapp);
+
+const firebaseUrl = async (url) => {
+  let imageName =  `bird_images/${v4()}`;
+  const storageRef = ref(firebaseStorage, imageName);
+  const snapshot = await uploadString(storageRef, url, 'data_url');
+  const imageLocation = await getDownloadURL(snapshot.ref);
+  return new Promise((resolve) => {
+    resolve(imageLocation);
+  });
+};
+
+app.post("/api/upload", async function (req, res) {
+  const file = req.body.image;
+  let url = await firebaseUrl(file).then((res) => {
+    return res;
+  });
+  res.status(200).json({imageURL: url});
+});
+
+
+// app.post("/api/upload", uploadFiles);
+// function uploadFiles(req, res) {
+//   console.log(req);
+// }
+
