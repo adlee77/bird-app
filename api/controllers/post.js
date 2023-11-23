@@ -22,6 +22,16 @@ export const getPost = (req, res) => {
   });
 };
 
+export const getPostByUserId = (req, res) => {
+  const q = "SELECT p.title, p.description, p.img, p.date, u.first_name, u.last_name FROM posts p JOIN users u ON p.user_id = u.id WHERE p.user_id = ?";
+
+  db.query(q, [req.params.id], (err, data) => {
+    if (err) return res.status(500).json(err);
+
+    return res.status(200).json(data);
+  });
+};
+
 export const addPost = (req, res) => {
   const token = req.cookies.access_token;
   if (!token) return res.status(401).json("Not authenticated!");

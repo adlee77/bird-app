@@ -9,7 +9,6 @@ import DropdownButton from 'react-bootstrap/DropdownButton';
 
 const element = <FontAwesomeIcon icon={faPlus} />
 
-
 const Navbar = () => {
   const { currentUser, logout } = useContext(AuthContext);
   const name = currentUser ? currentUser.first_name + " " + currentUser.last_name : 'login';
@@ -28,9 +27,12 @@ const Navbar = () => {
             </Link>
           </span>
           {!currentUser ? (
+                <div className="or">
                 <Link className="link" to="/login">
                   Login
-                </Link>
+                </Link> or <Link className="link" to="/register">
+                  Register
+                </Link></div>
               ) : (
                 <DropdownButton id="dropdown-basic-button" title={name}>
                   <Dropdown.Item href="/profile">Your Profile</Dropdown.Item>

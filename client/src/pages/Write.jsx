@@ -4,50 +4,43 @@ import "react-quill/dist/quill.snow.css";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
 import moment from "moment";
-import { initializeApp } from "firebase/app";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { v4 } from "uuid";
-
-
-const firebaseConfig = {
-  apiKey: "AIzaSyACFqB5BHtaluf2FzxnkAQ6mYMMEHsBJ6g",
-  authDomain: "bird-friends-1f511.firebaseapp.com",
-  projectId: "bird-friends-1f511",
-  storageBucket: "bird-friends-1f511.appspot.com",
-  messagingSenderId: "503411450824",
-  appId: "1:503411450824:web:f43d324b2c74d9493196fd",
-  measurementId: "G-YVD8ZXW593"
-};
-
-const firebaseapp = initializeApp(firebaseConfig);
-const storage = getStorage(firebaseapp);
 
 const Write = () => {
   const state = useLocation().state;
   const [value, setValue] = useState(state?.title || "");
   const [title, setTitle] = useState(state?.desc || "");
-  const [image, setImage] = useState(null);
   const [imageURL, setImageURL] = useState(null);
   const navigate = useNavigate()
 
   const onImageChange = (e) => {
     if (e.target.files && e.target.files[0]) {
       setImageURL(URL.createObjectURL(e.target.files[0]));
-      setImage(e.target.files[0]);
     }
   }
 
   const upload = async () => {
     try {
-      let imageName =  `bird_images/${v4()}`;
-      const storageRef = ref(storage, imageName);
-      const snapshot = await uploadBytes(storageRef, image)
-      const url = await getDownloadURL(snapshot.ref);
-      console.log(url)
-      return url;
+      let base64 = await imageUrlToBase64(imageURL).then((res) => {
+      return res});
+      let imageData = {image: base64, type: 'post'};
+      const res = await axios.post("/upload", imageData);
+      return res.data.imageURL;
     } catch (err) {
-      console.log(err);
     }
+  };
+
+  const imageUrlToBase64 = async (url) => {
+    const data = await fetch(url);
+    const blob = await data.blob();
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(blob);
+      reader.onloadend = () => {
+        const base64data = reader.result;
+        resolve(base64data);
+      };
+      reader.onerror = reject;
+    });
   };
 
   const handleClick = async (e) => {
@@ -110,9 +103,8 @@ const Write = () => {
           <label className="file" htmlFor="file">
             {imageURL ? `Change Image` : `Upload Image`}
           </label>
-          {image && <img className="imagePreview" alt="preview image" src={imageURL}/>}
+          {imageURL && <img className="imagePreview" alt="preview image" src={imageURL}/>}
           <div className="buttons">
-            <button>Save as a draft</button>
             <button onClick={handleClick}>Publish</button>
           </div>
         </div>

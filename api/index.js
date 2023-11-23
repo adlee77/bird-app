@@ -37,8 +37,9 @@ const firebaseConfig = {
 const firebaseapp = initializeApp(firebaseConfig);
 const firebaseStorage = getStorage(firebaseapp);
 
-const firebaseUrl = async (url) => {
-  let imageName =  `bird_images/${v4()}`;
+const firebaseUrl = async (url, type) => {
+  let folder = type == 'post' ? 'bird_images' : 'profile_images';
+  let imageName =  `${folder}/${v4()}`;
   const storageRef = ref(firebaseStorage, imageName);
   const snapshot = await uploadString(storageRef, url, 'data_url');
   const imageLocation = await getDownloadURL(snapshot.ref);
@@ -49,7 +50,8 @@ const firebaseUrl = async (url) => {
 
 app.post("/api/upload", async function (req, res) {
   const file = req.body.image;
-  let url = await firebaseUrl(file).then((res) => {
+  const type = req.body.type;
+  let url = await firebaseUrl(file, type).then((res) => {
     return res;
   });
   res.status(200).json({imageURL: url});
