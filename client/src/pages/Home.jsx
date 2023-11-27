@@ -33,19 +33,20 @@ const Home = () => {
       <SideProfile></SideProfile>
       <div className="posts">
         {posts.map((post) => (
-          <div className="post" key={post.id}>
-            <div className="content">
-              <Link className="link" to={`/post/${post.id}`}>
-                <h1>{post.title}</h1>
-              </Link>
-              <p>{getText(post.description)}</p>
-              <p className="author">By {post.first_name} {post.last_name}</p>
-              <button>Read More</button>
+          <Link className="link" to={`/post/${post.id}`}>
+            <div className="post" key={post.id}>
+              <div className="content"> 
+                  <h1>{post.title}</h1>
+                
+                <p>{getText(post.description)}</p>
+                <p className="author">By {post.first_name} {post.last_name}</p>
+                <button>Read More</button>
+              </div>
+              <div className="img">
+                <img src={`${post.img}`} alt="" />
+              </div>
             </div>
-            <div className="img">
-              <img src={`${post.img}`} alt="" />
-            </div>
-          </div>
+          </Link>
         ))}
       </div>
     </div>

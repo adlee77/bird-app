@@ -9,18 +9,17 @@ const SideProfile = () => {
     const { currentUser } = useContext(AuthContext);
 
     const [postNumber, setPostNumber] = useState([]);
-
-    useEffect(() => {
+    if (currentUser) {
         const fetchData = async () => {
-          try {
+        try {
             const res = await axios.get(`/posts/user/${currentUser.id}`);
             setPostNumber(res.data.length);
-          } catch (err) {
+        } catch (err) {
             console.log(err);
-          }
+        }
         };
         fetchData();
-      }, [currentUser.id]);
+    }
 
     return (
         <div className="side_profile">
@@ -40,7 +39,8 @@ const SideProfile = () => {
                     </div>
                 </div>
             ) : (
-                <div></div>
+                <div>
+                </div>
             )}
                 
             
