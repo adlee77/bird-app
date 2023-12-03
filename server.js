@@ -22,6 +22,9 @@ app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/posts", postRoutes);
 
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("client/build"));
+}
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "./client/build/index.html"));
 });
@@ -64,8 +67,4 @@ app.post("/api/upload", async function (req, res) {
 });
 
 
-// app.post("/api/upload", uploadFiles);
-// function uploadFiles(req, res) {
-//   console.log(req);
-// }
 
