@@ -14,7 +14,7 @@ const Navbar = () => {
   const name = currentUser ? currentUser.first_name + " " + currentUser.last_name : 'login';
   return (
     <div className="navbar">
-      {/* <div className="nav-container">
+      <div className="nav-container">
         <div className="logo">
           <Link to="/">
           <img src={Logo} alt="logo" />
@@ -43,7 +43,7 @@ const Navbar = () => {
               )}
           
         </div>
-      </div> */}
+      </div>
     </div>
   );
 };

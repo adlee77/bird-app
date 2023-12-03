@@ -29,7 +29,7 @@ const Home = () => {
 
   return (
     <div className="main-container">
-      {/* <SideProfile></SideProfile>
+      <SideProfile></SideProfile>
       <div className="posts">
         {posts.map((post) => (
           <Link className="link" to={`/post/${post.id}`}>
@@ -47,7 +47,7 @@ const Home = () => {
             </div>
           </Link>
         ))}
-      </div> */}
+      </div>
     </div>
   );
 };
