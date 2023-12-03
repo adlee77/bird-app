@@ -7,7 +7,6 @@ import dotenv from 'dotenv';
 import { initializeApp } from "firebase/app";
 import { getStorage, ref, uploadString, getDownloadURL } from "firebase/storage";
 import { v4 } from "uuid";
-import multer from "multer";
 
 
 dotenv.config({ path: './.env' })
