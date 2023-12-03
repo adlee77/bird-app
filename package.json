@@ -1,7 +1,7 @@
 {
-  "name": "api",
+  "name": "bird-friends",
   "version": "1.0.0",
-  "description": "",
+  "description": "bird-friends-app",
   "main": "server.js",
   "type": "module",
   "devDependencies": {
@@ -17,8 +17,7 @@
     "build": "cd client && npm run build",
     "heroku-postbuild": "npm run build"
   },
-  "keywords": [],
-  "author": "",
+  "author": "Andrew Lee",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",

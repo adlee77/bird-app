@@ -1,5 +1,5 @@
 import React from "react";
-import { useEffect } from "react";
+import { useEffect, Component } from "react";
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import SideProfile from "../components/SideProfile";
@@ -13,7 +13,7 @@ const Home = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get(`/posts`);
+        const res = await axios.get(`/api/posts`);
         setPosts(res.data);
       } catch (err) {
         console.log(err);
@@ -26,7 +26,6 @@ const Home = () => {
     const doc = new DOMParser().parseFromString(html, "text/html")
     return doc.body.textContent
   }
-
 
   return (
     <div className="main-container">

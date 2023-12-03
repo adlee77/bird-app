@@ -14,7 +14,7 @@ const Profile = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-            const res = await axios.get(`/posts/user/${currentUser.id}`);
+            const res = await axios.get(`/api/posts/user/${currentUser.id}`);
                 setPosts(res.data);
             } catch (err) {
             console.log(err);
@@ -39,7 +39,7 @@ const Profile = () => {
           let base64 = await imageUrlToBase64(imageURL).then((res) => {
           return res});
           let imageData = {image: base64, type: 'profile'};
-          const res = await axios.post("/upload", imageData);
+          const res = await axios.post("/api/upload", imageData);
           return res.data.imageURL;
         } catch (err) {
         }
@@ -63,7 +63,7 @@ const Profile = () => {
         e.preventDefault();
         let src = await upload();
         try {
-            await axios.put(`/users/image/${currentUser.id}`, {
+            await axios.put(`/api/users/image/${currentUser.id}`, {
                 img: src ? src : "",
             })
             window.location.reload(true);

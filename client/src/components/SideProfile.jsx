@@ -12,7 +12,7 @@ const SideProfile = () => {
     if (currentUser) {
         const fetchData = async () => {
         try {
-            const res = await axios.get(`/posts/user/${currentUser.id}`);
+            const res = await axios.get(`/api/posts/user/${currentUser.id}`);
             setPostNumber(res.data.length);
         } catch (err) {
             console.log(err);

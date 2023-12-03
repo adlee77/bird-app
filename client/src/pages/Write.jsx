@@ -23,7 +23,7 @@ const Write = () => {
       let base64 = await imageUrlToBase64(imageURL).then((res) => {
       return res});
       let imageData = {image: base64, type: 'post'};
-      const res = await axios.post("/upload", imageData);
+      const res = await axios.post("/api/upload", imageData);
       return res.data.imageURL;
     } catch (err) {
     }
@@ -48,12 +48,12 @@ const Write = () => {
     let src = await upload();
     try {
       state
-        ? await axios.put(`/posts/${state.id}`, {
+        ? await axios.put(`/api/posts/${state.id}`, {
             title,
             desc: value,
             img: src ? src : "",
           })
-        : await axios.post(`/posts/`, {
+        : await axios.post(`/api/posts/`, {
             title,
             desc: value,
             img: src ? src : "",
