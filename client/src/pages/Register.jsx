@@ -1,7 +1,7 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+import { AuthContext } from "../context/authContext";
 import Logo from "../img/birdfriendslogo.png";
 
 const Register = () => {
@@ -13,6 +13,8 @@ const Register = () => {
   });
   const [err, setError] = useState(null);
 
+  const { register, login } = useContext(AuthContext);
+
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -22,10 +24,11 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("/api/auth/register", inputs);
+      await register(inputs)
+      await login(inputs)
       navigate("/");
     } catch (err) {
-      setError(err.response.data);
+      setError(err.response);
     }
   };
 
