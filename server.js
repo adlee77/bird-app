@@ -57,21 +57,19 @@ app.post('/api/upload', upload.single('image'), async (req, res) => {
     return res.status(400).send('No file uploaded');
   }
 
-  // let folder = type == 'post' ? 'bird_images2' : 'profile_images';
-  let folder = 'bird_images2';
+  let folder = req.body.type == 'post' ? 'bird_images' : 'profile_images';
   let imageName =  `${folder}/${v4()}`;
-
   const storageRef = ref(firebaseStorage, imageName);  
-
   try {
     await uploadBytes(storageRef, req.file.buffer, { contentType: req.file.mimetype });
-    const imageLocation = await getDownloadURL(snapshot.ref);
-    res.status(200)
-    .send(imageLocation);
+    const imageUrl = await getDownloadURL(storageRef);
+    res.status(200).send({imageUrl});
   } catch (error) {
     console.error(error);
     res.status(500).send('Error uploading file.');
   }
+
+
 })
 
 
