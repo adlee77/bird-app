@@ -9,43 +9,37 @@ const Write = () => {
   const state = useLocation().state;
   const [value, setValue] = useState(state?.title || "");
   const [title, setTitle] = useState(state?.desc || "");
+  const [image, setImage] = useState(null);
   const [imageURL, setImageURL] = useState(null);
   const navigate = useNavigate()
 
   const onImageChange = (e) => {
     if (e.target.files && e.target.files[0]) {
-      setImageURL(URL.createObjectURL(e.target.files[0]));
+      setImage(e.target.files[0]);
+      const reader = new FileReader(); 
+      reader.onloadend = () => {
+        setImageURL(reader.result);
+      }
+      reader.readAsDataURL(e.target.files[0]);
     }
   }
 
-  const upload = async () => {
+  const upload = async (file) => {
+    const formData = new FormData();
+    formData.append('image', file);
+    formData.append('type', "post");
     try {
-      let base64 = await imageUrlToBase64(imageURL).then((res) => {
-      return res});
-      let imageData = {image: base64, type: 'post'};
-      const res = await axios.post("/api/upload", imageData);
-      return res.data.imageURL;
-    } catch (err) {
+      const res = await axios.post("/api/upload", formData);
+      return res.data.imageUrl;
+    } catch (error) {
+      console.error('Error uploading image:', error);
     }
   };
 
-  const imageUrlToBase64 = async (url) => {
-    const data = await fetch(url);
-    const blob = await data.blob();
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(blob);
-      reader.onloadend = () => {
-        const base64data = reader.result;
-        resolve(base64data);
-      };
-      reader.onerror = reject;
-    });
-  };
 
   const handleClick = async (e) => {
     e.preventDefault();
-    let src = await upload();
+    let src = await upload(image);
     try {
       state
         ? await axios.put(`/api/posts/${state.id}`, {
