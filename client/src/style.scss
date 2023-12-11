@@ -20,6 +20,8 @@ $gray: #5a5a5a;
     height: 100vh;
     max-width: none;
     padding: 0px;
+    display: flex;
+    flex-direction: column;
 
     .link {
       text-decoration: none;
@@ -122,6 +124,7 @@ $gray: #5a5a5a;
         display: flex;
         align-items: center;
         justify-content: space-between;
+
         .logo {
           img {
             width: 200px;
@@ -194,6 +197,16 @@ $gray: #5a5a5a;
             }
           }
         }
+
+        @media screen and (max-width: 900px) {
+          padding: 10px;
+
+          .logo {
+            img {
+              width: 150px;
+            }
+          }
+        }
       }
     }
 
@@ -201,6 +214,7 @@ $gray: #5a5a5a;
 
     footer {
       padding: 20px;
+      margin-top: auto;
       background-color: $tan;
       width: 100%;
       display: flex;
@@ -224,13 +238,16 @@ $gray: #5a5a5a;
       // Side Profile
 
     .side_profile {
-        
       margin-top: 10px;
       margin-right: 25px;
       border-radius: 6px;
       display: flex;
       width: 30%;
       border: 1px solid black;
+
+      @media screen and (max-width: 900px) {
+        display: none;
+      }
 
       .about {
         display: flex;
@@ -261,7 +278,8 @@ $gray: #5a5a5a;
       .posts {
         display: flex;
         flex-direction: column;
-        
+        width: -webkit-fill-available;
+
         .post {
           display: flex;
           gap: 100px;
@@ -304,6 +322,10 @@ $gray: #5a5a5a;
 
             p {
               font-size: 14px;
+              -webkit-line-clamp: 3;
+              display: -webkit-box;
+              -webkit-box-orient: vertical;
+              overflow: hidden;
             }
             
             .author {

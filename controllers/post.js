@@ -23,7 +23,7 @@ export const getPost = (req, res) => {
 };
 
 export const getPostByUserId = (req, res) => {
-  const q = "SELECT p.title, p.description, p.img, p.date, u.first_name, u.last_name FROM posts p JOIN users u ON p.user_id = u.id WHERE p.user_id = ?";
+  const q = "SELECT p.id, p.title, p.description, p.img, p.date, u.first_name, u.last_name FROM posts p JOIN users u ON p.user_id = u.id WHERE p.user_id = ?";
 
   db.query(q, [req.params.id], (err, data) => {
     if (err) return res.status(500).json(err);

@@ -1,16 +1,22 @@
 import React from "react";
-import { useEffect, Component } from "react";
+import { useEffect, Component, useContext } from "react";
 import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import SideProfile from "../components/SideProfile";
+import { AuthContext } from "../context/authContext";
 
 
 import axios from "axios";
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
+  const { currentUser } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
+    if (!currentUser) {
+      navigate("/login");
+    }
     const fetchData = async () => {
       try {
         const res = await axios.get(`/api/posts`);
@@ -32,8 +38,8 @@ const Home = () => {
       <SideProfile></SideProfile>
       <div className="posts">
         {posts.map((post) => (
-          <Link className="link" to={`/post/${post.id}`}>
-            <div className="post" key={post.id}>
+          <Link key={post.id} className="link" to={`/post/${post.id}`}>
+            <div className="post">
               <div className="content"> 
                   <h1>{post.title}</h1>
                 
